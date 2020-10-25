@@ -13,20 +13,24 @@ import cors from "cors";
 import { createConnection } from "typeorm";
 import { Post } from "./entities/Post";
 import { User } from "./entities/User";
+import path from "path";
 
+//rerun
 const main = async () => {
   const conn = await createConnection({
     type: "postgres",
     database: "lireddit2",
-    username: "postgres",
-    password: "postgres",
+    username: 'postgres',
+    password: 'h8ckh8ck',
     logging: true,
     synchronize: true,
+    migrations: [path.join(__dirname, "./migrations/*")],
     entities: [Post, User],
   });
-
+  console.log(conn.isConnected);
+  conn.runMigrations();
   const app = express();
-
+  
   const RedisStore = connectRedis(session);
   const redis = new Redis();
   app.use(
