@@ -24,11 +24,11 @@ const main = async () => {
     password: 'h8ckh8ck',
     logging: true,
     synchronize: true,
-    migrations: [path.join(__dirname, "./migrations/*")],
+    //migrations: [path.join(__dirname, "./migrations/*")],
     entities: [Post, User],
   });
   console.log(conn.isConnected);
-  conn.runMigrations();
+  //conn.runMigrations();
   const app = express();
   
   const RedisStore = connectRedis(session);
