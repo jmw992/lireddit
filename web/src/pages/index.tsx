@@ -6,16 +6,21 @@ import { Layout } from "../components/Layout";
 import { Box, Button, Flex, Heading, Link, Text } from "@chakra-ui/core";
 import NextLink from "next/link";
 import { Stack } from "@chakra-ui/core";
-import React from "react";
+import React, { useState } from "react";
 
 const Index = () => {
-  const [{ data, fetching }] = usePostsQuery({
-    variables: {
-      limit: 10,
-    },
+  const [variables, setVariables] = useState({
+    limit: 10,
+    cursor: null as null | string,
   });
-  if(!fetching && !data){
-    return <div> Query failed for some reasons</div>
+  
+  console.log(variables);
+
+  const [{ data, fetching }] = usePostsQuery({
+    variables,
+  });
+  if (!fetching && !data) {
+    return <div> Query failed for some reasons</div>;
   }
 
   return (
@@ -41,7 +46,17 @@ const Index = () => {
       )}
       {data ? (
         <Flex>
-          <Button isLoading={fetching} m="auto" my={8}>
+          <Button
+            onClick={() => {
+              setVariables({
+                limit: variables.limit,
+                cursor: data.posts[data.posts.length - 1].createdAt,
+              });
+            }}
+            isLoading={fetching}
+            m="auto"
+            my={8}
+          >
             Load More
           </Button>
         </Flex>
