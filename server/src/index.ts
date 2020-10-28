@@ -13,7 +13,7 @@ import cors from "cors";
 import { createConnection } from "typeorm";
 import { Post } from "./entities/Post";
 import { User } from "./entities/User";
-import path from "path";
+//import path from "path";
 
 //rerun
 const main = async () => {
@@ -27,8 +27,9 @@ const main = async () => {
     //migrations: [path.join(__dirname, "./migrations/*")],
     entities: [Post, User],
   });
-  console.log(conn.isConnected);
+  //console.log(conn.isConnected);
   //conn.runMigrations();
+  //await Post.delete({});
   const app = express();
   
   const RedisStore = connectRedis(session);
